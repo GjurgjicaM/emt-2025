@@ -1,0 +1,2 @@
+#DELETE localhost:9090/api/hosts/delete/2
+GET localhost:9090/api/hosts
