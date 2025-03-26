@@ -1,5 +1,6 @@
 package mk.ukim.finki.emtlabb.web;
 
+import io.swagger.v3.oas.annotations.Operation;
 import mk.ukim.finki.emtlabb.model.Accommodation;
 import mk.ukim.finki.emtlabb.model.dto.AccommodationDto;
 import mk.ukim.finki.emtlabb.service.AccommodationService;
@@ -18,24 +19,26 @@ public class AccommodationController {
     }
 
     @GetMapping
+    @Operation(summary = "Returns all accommodations")
     public List<Accommodation> findAll() {
         return this.accommodationService.findAll();
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Returns accommodation by ID")
     public ResponseEntity<Accommodation> findById(@PathVariable Long id) {
         return this.accommodationService.findById(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping("/add")
-//    @Operation(summary = "Adds a new book")
+    @Operation(summary = "Adds a new accommodation")
     public ResponseEntity<Accommodation> save(@RequestBody AccommodationDto accommodation) {
         return accommodationService.save(accommodation).map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PutMapping("/edit/{id}")
-//    @Operation(summary = "Updates a book record")
+    @Operation(summary = "Updates an accommodation record")
     public ResponseEntity<Accommodation> update(@PathVariable Long id, @RequestBody AccommodationDto accommodation) {
         return accommodationService.update(id, accommodation)
                 .map(ResponseEntity::ok)
@@ -43,6 +46,7 @@ public class AccommodationController {
     }
 
     @PutMapping("/rent/{id}")
+    @Operation(summary = "Marks an accommodation as rented")
     public ResponseEntity<Accommodation> markAsRented(@PathVariable Long id) {
         return accommodationService.markAsRented(id)
                 .map(ResponseEntity::ok)
@@ -50,7 +54,7 @@ public class AccommodationController {
     }
 
     @DeleteMapping("/delete/{id}")
-//    @Operation(summary = "Deletes a book by its ID")
+    @Operation(summary = "Deletes an accommodation by its ID")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         if (accommodationService.findById(id).isPresent()) {
             accommodationService.deleteById(id);
