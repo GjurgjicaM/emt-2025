@@ -1,4 +1,4 @@
-package mk.ukim.finki.emtlabb.model;
+package mk.ukim.finki.emtlabb.model.domain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

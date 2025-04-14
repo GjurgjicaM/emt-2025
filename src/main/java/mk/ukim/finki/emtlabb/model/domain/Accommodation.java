@@ -1,8 +1,11 @@
-package mk.ukim.finki.emtlabb.model;
+package mk.ukim.finki.emtlabb.model.domain;
 
 import jakarta.persistence.*;
 import lombok.Data;
 import mk.ukim.finki.emtlabb.model.enumerations.Category;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
@@ -20,6 +23,9 @@ public class Accommodation {
     @ManyToOne
     Host host;
 
+    @OneToMany(cascade = CascadeType.ALL)
+    List<Review> reviewList;
+
     Integer numRooms;
 
     boolean isRented = false;
@@ -27,12 +33,23 @@ public class Accommodation {
     public Accommodation() {
     }
 
-    public Accommodation(String name, Category category, Host host, Integer numRooms) {
+    public Accommodation(String name, Category category, Host host, Integer numRooms, Review reviewList) {
         this.name = name;
         this.category = category;
         this.host = host;
         this.numRooms = numRooms;
         this.isRented=false;
+        this.reviewList = new ArrayList<>();
+        this.reviewList.add(reviewList);
+    }
+
+    public Accommodation(String name, Category category, Host host, Integer numRooms) {
+        this.name = name;
+        this.category = category;
+        this.host = host;
+        this.numRooms = numRooms;
+        this.isRented = false;
+        this.reviewList = new ArrayList<>();
     }
 
 
@@ -82,5 +99,13 @@ public class Accommodation {
 
     public void setNumRooms(Integer numRooms) {
         this.numRooms = numRooms;
+    }
+
+    public List<Review> getReviewList() {
+        return reviewList;
+    }
+
+    public void setReviewList(List<Review> reviewList) {
+        this.reviewList = reviewList;
     }
 }

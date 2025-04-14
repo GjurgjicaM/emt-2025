@@ -1,2 +1,9 @@
 #DELETE localhost:9090/api/hosts/delete/2
-GET localhost:9090/api/hosts
+
+POST http://localhost:9090/api/user/login
+Content-Type: application/json
+
+{
+  "username": "user",
+  "password": "user"
+}

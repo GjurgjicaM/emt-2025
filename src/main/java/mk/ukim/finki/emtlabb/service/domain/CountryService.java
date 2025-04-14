@@ -1,6 +1,6 @@
-package mk.ukim.finki.emtlabb.service;
+package mk.ukim.finki.emtlabb.service.domain;
 
-import mk.ukim.finki.emtlabb.model.Country;
+import mk.ukim.finki.emtlabb.model.domain.Country;
 
 import java.util.List;
 import java.util.Optional;

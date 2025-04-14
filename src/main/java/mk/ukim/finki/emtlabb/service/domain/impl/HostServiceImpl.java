@@ -1,8 +1,8 @@
-package mk.ukim.finki.emtlabb.service.impl;
+package mk.ukim.finki.emtlabb.service.domain.impl;
 
-import mk.ukim.finki.emtlabb.model.Host;
+import mk.ukim.finki.emtlabb.model.domain.Host;
 import mk.ukim.finki.emtlabb.repository.HostRepository;
-import mk.ukim.finki.emtlabb.service.HostService;
+import mk.ukim.finki.emtlabb.service.domain.HostService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

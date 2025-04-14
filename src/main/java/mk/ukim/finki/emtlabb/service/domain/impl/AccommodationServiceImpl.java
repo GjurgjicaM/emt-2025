@@ -1,10 +1,11 @@
-package mk.ukim.finki.emtlabb.service.impl;
+package mk.ukim.finki.emtlabb.service.domain.impl;
 
-import mk.ukim.finki.emtlabb.model.Accommodation;
-import mk.ukim.finki.emtlabb.model.dto.AccommodationDto;
+import mk.ukim.finki.emtlabb.model.domain.Accommodation;
+import mk.ukim.finki.emtlabb.model.domain.Review;
 import mk.ukim.finki.emtlabb.repository.AccommodationRepository;
-import mk.ukim.finki.emtlabb.service.AccommodationService;
-import mk.ukim.finki.emtlabb.service.HostService;
+import mk.ukim.finki.emtlabb.service.domain.AccommodationService;
+import mk.ukim.finki.emtlabb.service.domain.HostService;
+import mk.ukim.finki.emtlabb.service.domain.ReviewService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,10 +15,12 @@ import java.util.Optional;
 public class AccommodationServiceImpl implements AccommodationService {
     private final AccommodationRepository accommodationRepository;
     private final HostService hostService;
+    private final ReviewService reviewService;
 
-    public AccommodationServiceImpl(AccommodationRepository accommodationRepository, HostService hostService) {
+    public AccommodationServiceImpl(AccommodationRepository accommodationRepository, HostService hostService, ReviewService reviewService) {
         this.accommodationRepository = accommodationRepository;
         this.hostService = hostService;
+        this.reviewService = reviewService;
     }
 
     @Override
@@ -31,19 +34,19 @@ public class AccommodationServiceImpl implements AccommodationService {
     }
 
     @Override
-    public Optional<Accommodation> update(Long id, AccommodationDto accommodation) {
+    public Optional<Accommodation> update(Long id, Accommodation accommodation) {
         return this.accommodationRepository.findById(id)
                 .map(existingAccommodation -> {
-                    if(accommodation.getName() != null){
+                    if (accommodation.getName() != null) {
                         existingAccommodation.setName(accommodation.getName());
                     }
-                    if (accommodation.getCategory()!= null){
+                    if (accommodation.getCategory() != null) {
                         existingAccommodation.setCategory(accommodation.getCategory());
                     }
-                    if(accommodation.getHostId()!=null && hostService.findById(accommodation.getHostId()).isPresent()){
-                        existingAccommodation.setHost(hostService.findById(accommodation.getHostId()).get());
+                    if (accommodation.getHost() != null && hostService.findById(accommodation.getHost().getId()).isPresent()) {
+                        existingAccommodation.setHost(hostService.findById(accommodation.getHost().getId()).get());
                     }
-                    if(accommodation.getNumRooms() != null){
+                    if (accommodation.getNumRooms() != null) {
                         existingAccommodation.setNumRooms(accommodation.getNumRooms());
                     }
                     return accommodationRepository.save(existingAccommodation);
@@ -51,11 +54,11 @@ public class AccommodationServiceImpl implements AccommodationService {
     }
 
     @Override
-    public Optional<Accommodation> save(AccommodationDto accommodation) {
-        if(accommodation.getCategory() != null && hostService.findById(accommodation.getHostId()).isPresent()){
+    public Optional<Accommodation> save(Accommodation accommodation) {
+        if (accommodation.getCategory() != null && hostService.findById(accommodation.getHost().getId()).isPresent()) {
             return Optional.of(
                     accommodationRepository.save(new Accommodation(accommodation.getName(), accommodation.getCategory(),
-                            hostService.findById(accommodation.getHostId()).get(), accommodation.getNumRooms()))
+                            hostService.findById(accommodation.getHost().getId()).get(), accommodation.getNumRooms(), new Review()))
             );
         }
         return Optional.empty();
@@ -73,4 +76,15 @@ public class AccommodationServiceImpl implements AccommodationService {
     public void deleteById(Long id) {
         this.accommodationRepository.deleteById(id);
     }
+
+    @Override
+    public Optional<Accommodation> addReview(Long id, Review review) {
+        review = reviewService.save(review).get();
+        Accommodation accommodation = this.accommodationRepository.findById(id).get();
+
+        accommodation.getReviewList().add(review);
+        return Optional.of(accommodationRepository.save(accommodation));
+    }
+
+
 }
