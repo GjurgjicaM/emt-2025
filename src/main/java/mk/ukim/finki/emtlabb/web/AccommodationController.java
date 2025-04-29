@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import mk.ukim.finki.emtlabb.dto.CreateAccommodationDto;
 import mk.ukim.finki.emtlabb.dto.CreateReviewDto;
 import mk.ukim.finki.emtlabb.dto.DisplayAccommodationDto;
+import mk.ukim.finki.emtlabb.model.enumerations.Category;
 import mk.ukim.finki.emtlabb.service.application.AccommodationApplicationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -74,4 +75,14 @@ public class AccommodationController {
         return accommodationApplicationService.addReview(id, reviewDto);
     }
 
+    @GetMapping("/search")
+    @Operation(summary = "Search accommodations by name, category, hostId or number of rooms")
+    public List<DisplayAccommodationDto> searchAccommodations(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) Category category,
+            @RequestParam(required = false) Long hostId,
+            @RequestParam(required = false) Integer numRooms
+    ) {
+        return accommodationApplicationService.search(name, category, hostId, numRooms);
+    }
 }

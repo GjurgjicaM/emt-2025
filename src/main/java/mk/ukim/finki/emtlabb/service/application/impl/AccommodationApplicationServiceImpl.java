@@ -6,6 +6,8 @@ import mk.ukim.finki.emtlabb.dto.DisplayAccommodationDto;
 import mk.ukim.finki.emtlabb.model.domain.Accommodation;
 import mk.ukim.finki.emtlabb.model.domain.Host;
 import mk.ukim.finki.emtlabb.model.domain.Review;
+import mk.ukim.finki.emtlabb.model.enumerations.Category;
+import mk.ukim.finki.emtlabb.model.exceptions.HostNotFound;
 import mk.ukim.finki.emtlabb.service.application.AccommodationApplicationService;
 import mk.ukim.finki.emtlabb.service.domain.AccommodationService;
 import mk.ukim.finki.emtlabb.service.domain.HostService;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class AccommodationApplicationServiceImpl implements AccommodationApplicationService {
@@ -79,13 +82,26 @@ public class AccommodationApplicationServiceImpl implements AccommodationApplica
         return accommodationService.findById(id).map(accommodation -> {
             Review review = reviewDto.toReview();
 
-            review = reviewService.save(review).orElseThrow(()->new RuntimeException("Review not saved"));
+            review = reviewService.save(review).orElseThrow(() -> new RuntimeException("Review not saved"));
 
             accommodation.getReviewList().add(review);
 
-            return accommodationService.update(id,accommodation)
+            return accommodationService.update(id, accommodation)
                     .map(DisplayAccommodationDto::from)
                     .orElse(null);
         });
+    }
+
+    @Override
+    public List<DisplayAccommodationDto> search(String name, Category category, Long hostId, Integer numRooms) {
+        Host host = (hostId != null) ? hostService.findById(hostId).orElseThrow(HostNotFound::new) : null;
+
+        return accommodationService.findAll().stream()
+                .filter(a -> name == null || a.getName().contains(name))
+                .filter(a -> category == null || a.getCategory().equals(category))
+                .filter(a -> host == null || a.getHost().equals(host))
+                .filter(a -> numRooms == null || a.getNumRooms().equals(numRooms))
+                .map(DisplayAccommodationDto::from)
+                .collect(Collectors.toList());
     }
 }

@@ -5,6 +5,7 @@ import mk.ukim.finki.emtlabb.dto.CreateReviewDto;
 import mk.ukim.finki.emtlabb.dto.DisplayAccommodationDto;
 import mk.ukim.finki.emtlabb.model.domain.Accommodation;
 import mk.ukim.finki.emtlabb.model.domain.Review;
+import mk.ukim.finki.emtlabb.model.enumerations.Category;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,5 +23,8 @@ public interface AccommodationApplicationService {
 
     void deleteById(Long id);
 
-    Optional<DisplayAccommodationDto> addReview(Long id,  CreateReviewDto reviewDto);
+    Optional<DisplayAccommodationDto> addReview(Long id, CreateReviewDto reviewDto);
+
+    List<DisplayAccommodationDto> search(String name, Category category, Long hostId, Integer numOfRooms);
+
 }
