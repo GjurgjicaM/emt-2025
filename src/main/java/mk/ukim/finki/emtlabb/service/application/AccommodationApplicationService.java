@@ -3,6 +3,7 @@ package mk.ukim.finki.emtlabb.service.application;
 import mk.ukim.finki.emtlabb.dto.CreateAccommodationDto;
 import mk.ukim.finki.emtlabb.dto.CreateReviewDto;
 import mk.ukim.finki.emtlabb.dto.DisplayAccommodationDto;
+import mk.ukim.finki.emtlabb.dto.DisplayHostDto;
 import mk.ukim.finki.emtlabb.model.domain.Accommodation;
 import mk.ukim.finki.emtlabb.model.domain.Review;
 import mk.ukim.finki.emtlabb.model.enumerations.Category;
@@ -26,5 +27,6 @@ public interface AccommodationApplicationService {
     Optional<DisplayAccommodationDto> addReview(Long id, CreateReviewDto reviewDto);
 
     List<DisplayAccommodationDto> search(String name, Category category, Long hostId, Integer numOfRooms);
+
 
 }

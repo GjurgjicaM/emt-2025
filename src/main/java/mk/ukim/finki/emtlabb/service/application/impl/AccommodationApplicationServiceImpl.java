@@ -3,11 +3,11 @@ package mk.ukim.finki.emtlabb.service.application.impl;
 import mk.ukim.finki.emtlabb.dto.CreateAccommodationDto;
 import mk.ukim.finki.emtlabb.dto.CreateReviewDto;
 import mk.ukim.finki.emtlabb.dto.DisplayAccommodationDto;
-import mk.ukim.finki.emtlabb.model.domain.Accommodation;
 import mk.ukim.finki.emtlabb.model.domain.Host;
 import mk.ukim.finki.emtlabb.model.domain.Review;
 import mk.ukim.finki.emtlabb.model.enumerations.Category;
 import mk.ukim.finki.emtlabb.model.exceptions.HostNotFound;
+import mk.ukim.finki.emtlabb.repository.AccommodationRepository;
 import mk.ukim.finki.emtlabb.service.application.AccommodationApplicationService;
 import mk.ukim.finki.emtlabb.service.domain.AccommodationService;
 import mk.ukim.finki.emtlabb.service.domain.HostService;
@@ -104,4 +104,6 @@ public class AccommodationApplicationServiceImpl implements AccommodationApplica
                 .map(DisplayAccommodationDto::from)
                 .collect(Collectors.toList());
     }
+
+
 }

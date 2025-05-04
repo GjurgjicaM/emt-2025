@@ -3,6 +3,7 @@ package mk.ukim.finki.emtlabb.service.domain.impl;
 import mk.ukim.finki.emtlabb.model.domain.Accommodation;
 import mk.ukim.finki.emtlabb.model.domain.Review;
 import mk.ukim.finki.emtlabb.repository.AccommodationRepository;
+import mk.ukim.finki.emtlabb.repository.AccommodationsPerHostViewRepository;
 import mk.ukim.finki.emtlabb.service.domain.AccommodationService;
 import mk.ukim.finki.emtlabb.service.domain.HostService;
 import mk.ukim.finki.emtlabb.service.domain.ReviewService;
@@ -16,11 +17,13 @@ public class AccommodationServiceImpl implements AccommodationService {
     private final AccommodationRepository accommodationRepository;
     private final HostService hostService;
     private final ReviewService reviewService;
+    private final AccommodationsPerHostViewRepository accommodationsPerHostViewRepository;
 
-    public AccommodationServiceImpl(AccommodationRepository accommodationRepository, HostService hostService, ReviewService reviewService) {
+    public AccommodationServiceImpl(AccommodationRepository accommodationRepository, HostService hostService, ReviewService reviewService, AccommodationsPerHostViewRepository accommodationsPerHostViewRepository) {
         this.accommodationRepository = accommodationRepository;
         this.hostService = hostService;
         this.reviewService = reviewService;
+        this.accommodationsPerHostViewRepository = accommodationsPerHostViewRepository;
     }
 
     @Override
@@ -86,5 +89,8 @@ public class AccommodationServiceImpl implements AccommodationService {
         return Optional.of(accommodationRepository.save(accommodation));
     }
 
-
+    @Override
+    public void refreshMaterializedView() {
+        accommodationsPerHostViewRepository.refreshMaterializedView();
+    }
 }

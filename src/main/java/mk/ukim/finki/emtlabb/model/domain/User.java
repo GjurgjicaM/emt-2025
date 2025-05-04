@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 @Data
 @Entity
@@ -33,6 +34,8 @@ public class User implements UserDetails {
     @Enumerated(value = EnumType.STRING)
     private Role role;
 
+
+
     public User() {
     }
 
@@ -56,6 +59,10 @@ public class User implements UserDetails {
         this.username = userDetails.getUsername();
         this.password = userDetails.getPassword();
     }
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<TemporaryReservation> temporaryReservations;
 
 
     @Override
@@ -137,5 +144,13 @@ public class User implements UserDetails {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public List<TemporaryReservation> getTemporaryReservations() {
+        return temporaryReservations;
+    }
+
+    public void setTemporaryReservations(List<TemporaryReservation> temporaryReservations) {
+        this.temporaryReservations = temporaryReservations;
     }
 }

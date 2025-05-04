@@ -13,8 +13,8 @@ public class TemporaryReservation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    //SMENI GO VO LAZY
+    @ManyToOne(fetch = FetchType.LAZY)
+
     private User user;
 
     @ManyToMany
@@ -51,4 +51,6 @@ public class TemporaryReservation {
     public void setAccommodations(List<Accommodation> accommodations) {
         this.accommodations = accommodations;
     }
+
+
 }

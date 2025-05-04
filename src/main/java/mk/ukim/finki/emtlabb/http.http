@@ -7,3 +7,7 @@ Content-Type: application/json
   "username": "user",
   "password": "user"
 }
+
+> {%
+    client.global.set("jwt_token", response.body.token);
+%}

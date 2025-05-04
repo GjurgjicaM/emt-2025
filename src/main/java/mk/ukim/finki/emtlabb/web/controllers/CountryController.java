@@ -1,4 +1,4 @@
-package mk.ukim.finki.emtlabb.web;
+package mk.ukim.finki.emtlabb.web.controllers;
 
         import io.swagger.v3.oas.annotations.Operation;
         import mk.ukim.finki.emtlabb.dto.CreateCountryDto;

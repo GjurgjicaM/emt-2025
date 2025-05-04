@@ -1,4 +1,4 @@
-package mk.ukim.finki.emtlabb.config;
+package mk.ukim.finki.emtlabb.config.init;
 
 import jakarta.annotation.PostConstruct;
 import mk.ukim.finki.emtlabb.model.domain.*;
@@ -17,6 +17,7 @@ public class DataInitializer {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
+
     public DataInitializer(AccommodationRepository accommodationRepository, HostRepository hostRepository, CountryRepository countryRepository, ReviewRepository reviewRepository, UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.accommodationRepository = accommodationRepository;
         this.hostRepository = hostRepository;
@@ -24,6 +25,7 @@ public class DataInitializer {
         this.reviewRepository = reviewRepository;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+
     }
 
 
@@ -73,5 +75,6 @@ public class DataInitializer {
                 "user",
                 Role.ROLE_USER
         ));
+
     }
 }

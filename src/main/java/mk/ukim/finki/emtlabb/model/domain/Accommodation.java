@@ -20,7 +20,7 @@ public class Accommodation {
     @Enumerated(EnumType.STRING)
     Category category;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     Host host;
 
     @OneToMany(cascade = CascadeType.ALL)

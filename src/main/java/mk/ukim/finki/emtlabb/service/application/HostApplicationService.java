@@ -18,4 +18,5 @@ public interface HostApplicationService {
     Optional<DisplayHostDto> save(CreateHostDto hostDto);
 
     void deleteById(Long id);
+
 }

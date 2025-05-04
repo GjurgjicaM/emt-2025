@@ -18,6 +18,7 @@ public class Review {
         this.rate = rate;
     }
 
+
     public Review() {
     }
 

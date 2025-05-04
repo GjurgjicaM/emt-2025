@@ -21,6 +21,6 @@ public interface AccommodationService {
 
     Optional<Accommodation>addReview(Long id, Review review);
 
-
+    void refreshMaterializedView();
 
 }

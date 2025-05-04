@@ -26,4 +26,6 @@ public record CreateHostDto(
     public Host toHost(Country country) {
         return new Host(name, surname, country);
     }
+
+
 }

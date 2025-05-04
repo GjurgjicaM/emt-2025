@@ -1,11 +1,14 @@
-package mk.ukim.finki.emtlabb.web;
+package mk.ukim.finki.emtlabb.web.controllers;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import mk.ukim.finki.emtlabb.dto.CreateHostDto;
 import mk.ukim.finki.emtlabb.dto.DisplayHostDto;
-import mk.ukim.finki.emtlabb.model.domain.Host;
+import mk.ukim.finki.emtlabb.model.projections.HostProjection;
+import mk.ukim.finki.emtlabb.model.views.HostsPerCountryView;
+import mk.ukim.finki.emtlabb.repository.HostsPerCountryViewRepository;
 import mk.ukim.finki.emtlabb.service.application.HostApplicationService;
+import mk.ukim.finki.emtlabb.service.domain.HostService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,9 +19,13 @@ import java.util.List;
 @Tag(name = "Hosts", description = "Host API")
 public class HostController {
     private final HostApplicationService hostApplicationService;
+    private final HostsPerCountryViewRepository hostsPerCountryViewRepository;
+    private final HostService hostService;
 
-    public HostController(HostApplicationService hostApplicationService) {
+    public HostController(HostApplicationService hostApplicationService, HostsPerCountryViewRepository hostsPerCountryViewRepository, HostService hostService) {
         this.hostApplicationService = hostApplicationService;
+        this.hostsPerCountryViewRepository = hostsPerCountryViewRepository;
+        this.hostService = hostService;
     }
 
     @GetMapping
@@ -63,4 +70,13 @@ public class HostController {
         }
     }
 
+    @GetMapping("/by-country")
+    public List<HostsPerCountryView> getHostsPerCountry() {
+        return hostsPerCountryViewRepository.findAll();
+    }
+
+    @GetMapping("/names")
+    public List<HostProjection>getHostNames(){
+        return hostService.getAllHostNames();
+    }
 }

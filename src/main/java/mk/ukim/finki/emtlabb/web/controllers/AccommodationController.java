@@ -1,4 +1,4 @@
-package mk.ukim.finki.emtlabb.web;
+package mk.ukim.finki.emtlabb.web.controllers;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -6,6 +6,8 @@ import mk.ukim.finki.emtlabb.dto.CreateAccommodationDto;
 import mk.ukim.finki.emtlabb.dto.CreateReviewDto;
 import mk.ukim.finki.emtlabb.dto.DisplayAccommodationDto;
 import mk.ukim.finki.emtlabb.model.enumerations.Category;
+import mk.ukim.finki.emtlabb.model.views.AccommodationsPerHostView;
+import mk.ukim.finki.emtlabb.repository.AccommodationsPerHostViewRepository;
 import mk.ukim.finki.emtlabb.service.application.AccommodationApplicationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,9 +20,12 @@ import java.util.Optional;
 @Tag(name = "Accommodations", description = "Accommodation API")
 public class AccommodationController {
     private final AccommodationApplicationService accommodationApplicationService;
+    private final AccommodationsPerHostViewRepository viewRepository;
 
-    public AccommodationController(AccommodationApplicationService accommodationApplicationService) {
+
+    public AccommodationController(AccommodationApplicationService accommodationApplicationService, AccommodationsPerHostViewRepository viewRepository) {
         this.accommodationApplicationService = accommodationApplicationService;
+        this.viewRepository = viewRepository;
     }
 
 
@@ -84,5 +89,9 @@ public class AccommodationController {
             @RequestParam(required = false) Integer numRooms
     ) {
         return accommodationApplicationService.search(name, category, hostId, numRooms);
+    }
+    @GetMapping("/by-host")
+    public List<AccommodationsPerHostView> getAccommodationsPerHost() {
+        return viewRepository.findAll();
     }
 }
