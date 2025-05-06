@@ -31,10 +31,6 @@
             this.userApplicationService = userApplicationService;
         }
 
-        @GetMapping("/ping")
-        public String ping() {
-            return "pong";
-        }
 
         @Operation(summary = "Register a new user", description = "Creates a new user account")
         @ApiResponses(

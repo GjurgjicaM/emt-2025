@@ -13,7 +13,7 @@ import java.util.List;
 public interface AccommodationsPerHostViewRepository extends JpaRepository<AccommodationsPerHostView, Long> {
     @Transactional
     @Modifying(clearAutomatically = true)
-    @Query(value = "REFRESH MATERIALIZED VIEW public.accommodations_per_hosts", nativeQuery = true)
+    @Query(value = "REFRESH MATERIALIZED VIEW accommodations_per_hosts", nativeQuery = true)
     void refreshMaterializedView();
 
     @Override

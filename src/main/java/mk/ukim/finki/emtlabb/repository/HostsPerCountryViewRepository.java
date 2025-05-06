@@ -13,7 +13,7 @@ import java.util.List;
 public interface HostsPerCountryViewRepository extends JpaRepository<HostsPerCountryView,Long> {
     @Transactional
     @Modifying(clearAutomatically = true)
-    @Query(value = "REFRESH MATERIALIZED VIEW public.hosts_per_countries", nativeQuery = true)
+    @Query(value = "REFRESH MATERIALIZED VIEW hosts_per_countries", nativeQuery = true)
     void refreshMaterializedView();
 
     @Override
